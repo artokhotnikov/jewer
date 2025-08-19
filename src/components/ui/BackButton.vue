@@ -27,5 +27,6 @@ const router = useRouter()
   color: var(--color-black);
   left: 292px;
   bottom: 80px;
+  z-index: 100;
 }
 </style>
