@@ -1,4 +1,9 @@
 :root {
   --color-primary: #4f46e5;
   --color-red: #ff0101;
+  --color-white: #fff;
+  --color-gray: #dedede;
+
+  /*это для анимашек, чтоб идешка не краснила ошибками*/
+  --i: 0;
 }

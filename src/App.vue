@@ -14,24 +14,21 @@ onMounted(async () => {
 
   writeCssVars()
 })
-writeCssVars()
 </script>
 
 <template>
   <RouterView v-slot="{ Component }">
     <template v-if="Component">
-      <transition name="fade" mode="out-in">
+      <transition name="fade" mode="out-in" class="router-view-transition">
         <suspense>
-          <div>
-            <component :is="Component" />
-
-            <transition name="fade" appear>
-              <clear-handler v-if="fs.hasAccess" />
-
-              <access-handler v-else />
-            </transition>
-          </div>
+          <component :is="Component" />
         </suspense>
+      </transition>
+
+      <transition name="fade" appear>
+        <clear-handler v-if="fs.hasAccess" />
+
+        <access-handler v-else />
       </transition>
     </template>
   </RouterView>
