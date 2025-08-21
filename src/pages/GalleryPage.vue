@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 import { useFsMediaStore, type MediaFile } from '@/stores/fsMedia.ts'
 
 import EmptyBlock from '@/components/helpers/EmptyBlock.vue'
@@ -8,12 +7,11 @@ import BackButton from '@/components/ui/BackButton.vue'
 import MediaSlider from '@/components/MediaSlider.vue'
 
 const fs = useFsMediaStore()
+const GALLERY_NAME = 'Контент'
 
-const params = useRoute().params
-const galleryName = params.name as string
-const emptyTitle = `Галерея ${galleryName} не заполнена`
+const emptyTitle = `Галерея ${GALLERY_NAME} не заполнена`
 
-const gallery = computed(() => fs.byDir.get(galleryName) || [])
+const gallery = computed(() => fs.byDir.get(GALLERY_NAME) || [])
 const hasGallery = computed(() => Array.isArray(gallery.value) && gallery.value.length > 0)
 
 const handleSlideChange = (index: number, item: MediaFile) => {

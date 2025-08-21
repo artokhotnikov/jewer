@@ -1,104 +1,59 @@
 <script setup lang="ts">
-import { useFsMediaStore, type MediaFile } from '@/stores/fsMedia.ts'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import EmptyBlock from '@/components/helpers/EmptyBlock.vue'
+import { useFsMediaStore } from '@/stores/fsMedia.ts'
 
 const DIR_NAME = 'Меню'
 
 const fs = useFsMediaStore()
 const router = useRouter()
 
-const menuItems = computed(() => fs.byDir.get(DIR_NAME))
-const hasMenuItems = computed(() => Array.isArray(menuItems.value) && menuItems.value.length > 0)
+const menuItem = computed(() => fs.byDir.get(DIR_NAME)?.[0])
 
-const animatingItemId = ref<string | null>(null)
-const isAnimating = ref(false)
-
-const handleClick = async (item: MediaFile) => {
-  if (isAnimating.value) return
-
-  isAnimating.value = true
-  animatingItemId.value = item.id
-
-  await new Promise((resolve) => {
-    setTimeout(resolve, 800)
-  })
-
-  router.push(`/gallery/${item.nameClear}`)
+const handleClick = () => {
+  router.push(`/gallery`)
 }
 </script>
 
 <template>
   <div class="menu">
-    <transition-group v-if="hasMenuItems" name="menu" tag="div" class="menu-list" appear>
-      <div
-        v-for="(item, i) in menuItems"
-        :key="item.id"
-        class="menu-item"
-        :class="{ animating: animatingItemId === item.id }"
-        :style="{ '--i': i }"
-        @click="handleClick(item)"
-      >
-        <img :src="item.url" alt="" />
-        <span>{{ item.nameClear }}</span>
-      </div>
-    </transition-group>
+    <img v-if="menuItem" :src="menuItem.url" class="menu-bg" />
 
-    <empty-block v-else title="Меню не заполнено" />
+    <div class="btn" @click="handleClick">Нажмите, чтобы начать</div>
   </div>
 </template>
 
 <style scoped>
-.menu-list {
-  padding: 80px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+.menu {
+  background-color: var(--color-gray);
+  width: 100vq;
+  height: 100vh;
+  position: relative;
 }
 
-.menu-item {
-  position: relative;
+.menu-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.btn {
+  border-radius: 108px;
+  padding: 48px 64px;
+  backdrop-filter: blur(50px);
+  background: rgba(255, 255, 255, 0.8);
+  width: 1664px;
+  height: 216px;
+  font-weight: 600;
+  font-size: 64px;
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  height: 980px;
-  border-radius: 72px;
-  overflow: hidden;
-  will-change: transform, opacity;
   cursor: pointer;
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-
-  &.animating {
-    img {
-      transform: scale(1.3);
-    }
-
-    span {
-      transform: scale(0.8);
-      opacity: 0.8;
-    }
-  }
-
-  img {
-    position: absolute;
-    object-fit: cover;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  span {
-    position: absolute;
-    font-size: 120px;
-    font-weight: 600;
-    color: var(--color-white);
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 1;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
 }
 </style>
