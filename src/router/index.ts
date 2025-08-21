@@ -14,6 +14,11 @@ const router = createRouter({
       component: () => import('@/pages/GalleryPage.vue'),
     },
     {
+      path: '/text/:name',
+      name: 'text',
+      component: () => import('@/pages/TextPage.vue'),
+    },
+    {
       path: '/menu/:name',
       name: 'menu',
       component: () => import('@/pages/SubMenuPage.vue'),

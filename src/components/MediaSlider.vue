@@ -88,7 +88,7 @@ const goPrev = () => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding: 80px;
+  padding: 356px 80px 80px;
 }
 
 .slider-container {
@@ -107,8 +107,8 @@ const goPrev = () => {
   align-items: center;
   justify-content: center;
   will-change: transform, opacity;
-  width: 3256px;
-  height: 1832px;
+  width: 1664px;
+  height: 2960px;
   border-radius: 72px;
   overflow: hidden;
 }

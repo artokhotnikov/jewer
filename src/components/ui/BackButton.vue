@@ -14,7 +14,7 @@ const router = useRouter()
 <style scoped>
 .back-button {
   position: absolute;
-  width: 420px;
+  width: 470px;
   height: 128px;
   border-radius: 64px;
   background-color: var(--color-white);
@@ -25,7 +25,7 @@ const router = useRouter()
   font-size: 40px;
   font-weight: 600;
   color: var(--color-black);
-  left: 292px;
+  left: 80px;
   bottom: 80px;
   z-index: 100;
 }

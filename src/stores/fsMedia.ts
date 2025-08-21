@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-export type MediaKind = 'image' | 'video' | 'audio' | 'pdf' | 'other'
+export type MediaKind = 'image' | 'video' | 'audio' | 'pdf' | 'json' | 'other'
 
 export interface MediaFile {
   id: string
@@ -13,6 +13,7 @@ export interface MediaFile {
   kind: MediaKind
   file: File
   url: string
+  content?: any
 }
 
 export interface FsMediaOptions {
@@ -46,6 +47,7 @@ const DEFAULT_EXTS = [
   'ogg',
   'opus',
   'pdf',
+  'json',
 ]
 
 const DB_NAME = 'fs-handles-db'
@@ -100,7 +102,20 @@ function kindByExt(ext: string): MediaKind {
   if (['mp4', 'webm', 'mov', 'm4v', 'ogv', '3gp', 'avi', 'mkv'].includes(e)) return 'video'
   if (['mp3', 'wav', 'flac', 'm4a', 'aac', 'ogg', 'opus'].includes(e)) return 'audio'
   if (e === 'pdf') return 'pdf'
+  if (e === 'json') return 'json'
   return 'other'
+}
+
+async function readJsonContent(file: File): Promise<any> {
+  try {
+    const text = await file.text()
+
+    return JSON.parse(text)
+  } catch (error) {
+    console.warn('Ошибка при чтении JSON файла:', error)
+
+    return null
+  }
 }
 
 async function walkDir(root: FileSystemDirectoryHandle, basePath = ''): Promise<[string, File][]> {
@@ -142,6 +157,7 @@ export const useFsMediaStore = defineStore('fsMedia', () => {
   const videos = computed(() => files.value.filter((f) => f.kind === 'video'))
   const audios = computed(() => files.value.filter((f) => f.kind === 'audio'))
   const pdfs = computed(() => files.value.filter((f) => f.kind === 'pdf'))
+  const jsons = computed(() => files.value.filter((f) => f.kind === 'json'))
 
   const byDir = computed(() => {
     const map = new Map<string, MediaFile[]>()
@@ -166,6 +182,11 @@ export const useFsMediaStore = defineStore('fsMedia', () => {
         f.relDir.toLowerCase().includes(s) ||
         f.ext.toLowerCase() === s,
     )
+  }
+
+  function getJsonContent(fileId: string): any {
+    const file = files.value.find((f) => f.id === fileId)
+    return file?.ext === 'json' ? file.content : null
   }
 
   function extAllowed(ext: string) {
@@ -248,8 +269,15 @@ export const useFsMediaStore = defineStore('fsMedia', () => {
         kind: kindByExt(f.ext),
         file: f.file,
         url: URL.createObjectURL(f.file),
+        content: undefined,
       }))
       .sort((a, b) => a.relPath.localeCompare(b.relPath, 'ru'))
+
+    for (const file of files.value) {
+      if (file.ext === 'json') {
+        file.content = await readJsonContent(file.file)
+      }
+    }
     status.value = `Готово: ${files.value.length} файл(ов)`
   }
 
@@ -295,9 +323,11 @@ export const useFsMediaStore = defineStore('fsMedia', () => {
     videos,
     audios,
     pdfs,
+    jsons,
     byDir,
     inDir,
     search,
+    getJsonContent,
     ensureAccess,
     pickDirectory,
     rescan,

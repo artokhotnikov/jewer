@@ -6,7 +6,7 @@ import EmptyBlock from '@/components/helpers/EmptyBlock.vue'
 import MenuItem from '@/components/helpers/MenuItem.vue'
 
 const DIR_NAME = 'Меню'
-const HAS_SUBMENU_PAGES = ['Ресурсы земли']
+const HAS_SUBMENU_PAGES = ['Словарь']
 
 const fs = useFsMediaStore()
 const router = useRouter()
@@ -35,7 +35,7 @@ const handleClick = (item: MediaFile) => {
 .menu-list {
   padding: 80px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 40px;
   height: 100vh;
 }
