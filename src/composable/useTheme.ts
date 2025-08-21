@@ -5,6 +5,7 @@ export type ThemeVars = {
   red: string
   white: string
   gray: string
+  black: string
 }
 
 const theme = reactive<ThemeVars>({
@@ -12,6 +13,7 @@ const theme = reactive<ThemeVars>({
   red: '#9d0000',
   white: '#fff',
   gray: '#dedede',
+  black: '#3d4734',
 })
 
 function writeCssVars(vars: ThemeVars = theme, el: HTMLElement = document.documentElement) {
@@ -19,6 +21,7 @@ function writeCssVars(vars: ThemeVars = theme, el: HTMLElement = document.docume
   el.style.setProperty('--color-red', vars.red)
   el.style.setProperty('--color-white', vars.white)
   el.style.setProperty('--color-gray', vars.gray)
+  el.style.setProperty('--color-black', vars.black)
 }
 
 watch(theme, () => writeCssVars(theme), { deep: true, flush: 'post' })

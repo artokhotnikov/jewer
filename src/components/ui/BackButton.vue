@@ -14,19 +14,21 @@ const router = useRouter()
 <style scoped>
 .back-button {
   position: absolute;
-  width: 310px;
-  height: 128px;
-  border-radius: 64px;
-  background-color: var(--color-white);
+  width: 550px;
+  height: 160px;
+  border-radius: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  font-size: 40px;
+  font-size: 48px;
   font-weight: 600;
   color: var(--color-black);
-  left: 292px;
+  left: 80px;
   bottom: 80px;
   z-index: 100;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.4);
 }
 </style>

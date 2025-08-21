@@ -11,13 +11,13 @@
   line-height: 120%;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  color: #fff;
-  backdrop-filter: blur(26px);
+  color: var(--color-white);
+  backdrop-filter: blur(10px);
   box-shadow: inset 0 0 24px 0 rgba(0, 0, 0, 0.25);
   border-radius: 170px;
   padding: 48px 120px;
   background-color: #19191964;
-  border: 5px solid #fff;
+  border: 5px solid var(--color-white);
   display: inline-flex;
   align-items: center;
   justify-content: center;

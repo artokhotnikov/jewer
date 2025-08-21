@@ -1,4 +1,9 @@
-<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="128" height="128" rx="64" fill="white"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M54.6985 43.8148C55.5371 43.096 56.7997 43.1931 57.5185 44.0318L73.5185 62.6984C74.1605 63.4474 74.1605 64.5526 73.5185 65.3016L57.5185 83.9683C56.7997 84.8069 55.5371 84.904 54.6985 84.1852C53.8598 83.4664 53.7627 82.2037 54.4815 81.3651L69.3659 64L54.4815 46.6349C53.7627 45.7963 53.8598 44.5337 54.6985 43.8148Z" fill="#1C274C"/>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<foreignObject x="-25" y="-25" width="250" height="250"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(12.5px);clip-path:url(#bgblur_0_173_8325_clip_path);height:100%;width:100%"></div></foreignObject><g data-figma-bg-blur-radius="25">
+<rect width="200" height="200" rx="100" fill="white" fill-opacity="0.6"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M85.4663 68.4606C86.7767 67.3374 88.7495 67.4892 89.8727 68.7996L114.873 97.9663C115.876 99.1365 115.876 100.863 114.873 102.034L89.8727 131.2C88.7495 132.511 86.7767 132.663 85.4663 131.539C84.1559 130.416 84.0042 128.443 85.1274 127.133L108.384 100L85.1274 72.867C84.0042 71.5566 84.1559 69.5838 85.4663 68.4606Z" fill="#3D4734"/>
+</g>
+<defs>
+<clipPath id="bgblur_0_173_8325_clip_path" transform="translate(25 25)"><rect width="200" height="200" rx="100"/>
+</clipPath></defs>
 </svg>

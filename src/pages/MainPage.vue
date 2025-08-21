@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import VTitle from '@/components/ui/VTitle.vue'
+
+const router = useRouter()
+
+const handleClick = (item: string) => {
+  router.push(`/gallery/${item}`)
+}
 </script>
 
 <template>
@@ -14,19 +21,19 @@ import VTitle from '@/components/ui/VTitle.vue'
     </div>
 
     <div class="menu-items">
-      <div class="menu-item">
+      <div class="menu-item" @click="handleClick('Музыка')">
         <img src="/files/menu/music.png" alt="" />
       </div>
 
-      <div class="menu-item">
+      <div class="menu-item" @click="handleClick('Искусство')">
         <img src="/files/menu/issk.png" alt="" />
       </div>
 
-      <div class="menu-item">
+      <div class="menu-item" @click="handleClick('Культура')">
         <img src="/files/menu/cult.png" alt="" />
       </div>
 
-      <div class="menu-item">
+      <div class="menu-item" @click="handleClick('Менора')">
         <img src="/files/menu/menora.png" alt="" />
       </div>
     </div>

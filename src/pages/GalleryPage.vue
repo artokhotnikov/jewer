@@ -6,6 +6,8 @@ import { useFsMediaStore, type MediaFile } from '@/stores/fsMedia.ts'
 import EmptyBlock from '@/components/helpers/EmptyBlock.vue'
 import BackButton from '@/components/ui/BackButton.vue'
 import MediaSlider from '@/components/MediaSlider.vue'
+import GalleryTitle from '@/components/Gallery/GalleryTitle.vue'
+import GalleryBackground from '@/components/Gallery/GalleryBackground.vue'
 
 const fs = useFsMediaStore()
 
@@ -17,14 +19,18 @@ const gallery = computed(() => fs.byDir.get(galleryName) || [])
 const hasGallery = computed(() => Array.isArray(gallery.value) && gallery.value.length > 0)
 
 const handleSlideChange = (index: number, item: MediaFile) => {
-  console.log(`Переключился на слайд ${index + 1}:`, item.name)
+  console.log(`слайд ${index + 1}:`, item.name)
 }
 </script>
 
 <template>
   <div class="gallery">
+    <gallery-title />
+
     <div v-if="hasGallery" class="gallery-content">
       <media-slider :items="gallery" @slide-change="handleSlideChange" />
+
+      <gallery-background />
     </div>
 
     <empty-block v-else :title="emptyTitle" />
@@ -35,7 +41,6 @@ const handleSlideChange = (index: number, item: MediaFile) => {
 
 <style scoped>
 .gallery {
-  background-color: var(--color-gray);
   position: relative;
   width: 100vw;
   height: 100vh;

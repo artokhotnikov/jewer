@@ -88,7 +88,7 @@ const goPrev = () => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding: 80px;
+  padding: 280px 80px 80px;
 }
 
 .slider-container {
@@ -107,10 +107,34 @@ const goPrev = () => {
   align-items: center;
   justify-content: center;
   will-change: transform, opacity;
-  width: 3256px;
-  height: 1832px;
+  width: 2828px;
+  height: 1590px;
+  box-shadow: 0 4px 64px 2px rgba(0, 0, 0, 0.25);
   border-radius: 72px;
-  overflow: hidden;
+
+  img {
+    border-radius: 72px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 287px;
+    height: 287px;
+    background: url('@/assets/icons/slide-1.svg') center/contain no-repeat;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 287px;
+    height: 287px;
+    background: url('@/assets/icons/slide-2.svg') center/contain no-repeat;
+  }
 }
 
 .media-content {
@@ -148,8 +172,8 @@ const goPrev = () => {
 }
 
 .nav-btn {
-  width: 128px;
-  height: 128px;
+  width: 200px;
+  height: 200px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -157,8 +181,6 @@ const goPrev = () => {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
 }
 
 .nav-btn:hover:not(:disabled) {
