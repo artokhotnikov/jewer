@@ -8,6 +8,8 @@ interface Props {
 defineProps<Props>()
 
 const videoRef = ref<HTMLVideoElement>()
+const volumeSlider = ref<HTMLElement>()
+const progressSlider = ref<HTMLElement>()
 const isPlaying = ref(false)
 const currentTime = ref(0)
 const duration = ref(0)
@@ -32,12 +34,16 @@ const toggleMute = () => {
   }
 }
 
-const updateVolume = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const newVolume = parseFloat(target.value)
-  volume.value = newVolume
-  if (videoRef.value) {
+const updateVolumeClick = (event: MouseEvent) => {
+  if (volumeSlider.value && videoRef.value) {
+    const rect = volumeSlider.value.getBoundingClientRect()
+    const clickX = event.clientX - rect.left
+    const percent = clickX / rect.width
+    const newVolume = Math.max(0, Math.min(1, percent))
+
+    volume.value = newVolume
     videoRef.value.volume = newVolume
+
     if (newVolume === 0) {
       isMuted.value = true
     } else if (isMuted.value) {
@@ -46,10 +52,13 @@ const updateVolume = (event: Event) => {
   }
 }
 
-const seekTo = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const seekTime = parseFloat(target.value)
-  if (videoRef.value) {
+const seekToClick = (event: MouseEvent) => {
+  if (progressSlider.value && videoRef.value) {
+    const rect = progressSlider.value.getBoundingClientRect()
+    const clickX = event.clientX - rect.left
+    const percent = clickX / rect.width
+    const seekTime = percent * duration.value
+
     videoRef.value.currentTime = seekTime
     currentTime.value = seekTime
   }
@@ -117,15 +126,11 @@ onUnmounted(() => {
         </button>
 
         <div class="volume-control">
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            :value="volume"
-            @input="updateVolume"
-            class="volume-slider"
-          />
+          <div class="volume-slider" @click="updateVolumeClick" ref="volumeSlider">
+            <div class="volume-track">
+              <div class="volume-fill" :style="{ width: volume * 100 + '%' }"></div>
+            </div>
+          </div>
         </div>
 
         <div class="time-display">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</div>
@@ -138,15 +143,14 @@ onUnmounted(() => {
           <img v-else src="@/assets/icons/play.svg" alt="" />
         </button>
 
-        <input
-          type="range"
-          min="0"
-          :max="duration"
-          step="0.1"
-          :value="currentTime"
-          @input="seekTo"
-          class="progress-slider"
-        />
+        <div class="progress-slider" @click="seekToClick" ref="progressSlider">
+          <div class="progress-track">
+            <div
+              class="progress-fill"
+              :style="{ width: (currentTime / duration) * 100 + '%' }"
+            ></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -213,19 +217,24 @@ onUnmounted(() => {
   height: 12px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  outline: none;
-  -webkit-appearance: none;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-.volume-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 32px;
-  height: 32px;
+.volume-track {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  position: relative;
+}
+
+.volume-fill {
+  height: 100%;
   background: var(--color-white);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  transition: width 0.1s ease;
 }
 
 .time-display {
@@ -247,18 +256,23 @@ onUnmounted(() => {
   height: 12px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  outline: none;
-  -webkit-appearance: none;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-.progress-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 32px;
-  height: 32px;
+.progress-track {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
   background: var(--color-white);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  transition: width 0.1s ease;
 }
 </style>
