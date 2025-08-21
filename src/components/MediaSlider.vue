@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import type { MediaFile } from '@/stores/fsMedia'
+import VideoPlayer from './VideoPlayer.vue'
 
 const props = defineProps<{
   items: MediaFile[]
@@ -52,10 +53,9 @@ const goPrev = () => {
             class="media-content"
           />
 
-          <video
+          <video-player
             v-else-if="currentItem.kind === 'video'"
             :src="currentItem.url"
-            :controls="true"
             class="media-content"
           />
 
