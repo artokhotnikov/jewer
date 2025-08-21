@@ -53,7 +53,7 @@ const goPrev = () => {
             class="media-content"
           />
 
-          <VideoPlayer
+          <video-player
             v-else-if="currentItem.kind === 'video'"
             :src="currentItem.url"
             class="media-content"
