@@ -5,6 +5,7 @@ import { useFsMediaStore, type MediaFile } from '@/stores/fsMedia.ts'
 
 import EmptyBlock from '@/components/helpers/EmptyBlock.vue'
 import BackButton from '@/components/ui/BackButton.vue'
+import SmokeButton from '@/components/ui/SmokeButton.vue'
 import MediaSlider from '@/components/MediaSlider.vue'
 
 const fs = useFsMediaStore()
@@ -30,6 +31,8 @@ const handleSlideChange = (index: number, item: MediaFile) => {
     <empty-block v-else :title="emptyTitle" />
 
     <back-button />
+
+    <smoke-button />
   </div>
 </template>
 
