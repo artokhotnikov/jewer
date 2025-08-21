@@ -19,7 +19,7 @@ onMounted(async () => {
 <template>
   <RouterView v-slot="{ Component }">
     <template v-if="Component">
-      <transition name="fade" mode="out-in" class="router-view-transition">
+      <transition name="fade" mode="out-in">
         <suspense>
           <component :is="Component" />
         </suspense>

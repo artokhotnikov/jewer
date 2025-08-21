@@ -7,11 +7,11 @@ const { title = 'Ничего не найдено' } = defineProps<Props>()
 </script>
 
 <template>
-<div class="block">
-  <div class="block-title">
-    {{ title }}
+  <div class="block">
+    <div class="block-title">
+      {{ title }}
+    </div>
   </div>
-</div>
 </template>
 
 <style scoped>
