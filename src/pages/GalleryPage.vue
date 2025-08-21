@@ -45,6 +45,27 @@ const handleSlideChange = (index: number, item: MediaFile) => {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background: url('@/assets/img/gallery/bg.svg') center / cover no-repeat;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 1800px;
+    height: 750px;
+    background: url('@/assets/img/gallery/left.svg') top left / contain no-repeat;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 1289px;
+    height: 439px;
+    background: url('@/assets/img/gallery/right.svg') top right / contain no-repeat;
+  }
 }
 
 .gallery-content {

@@ -22,24 +22,24 @@ const handleClick = (item: string) => {
 
     <div class="menu-items">
       <div class="menu-item" @click="handleClick('Музыка')">
-        <img src="/files/menu/music.png" alt="" />
+        <img src="@/assets/img/menu/music.png" alt="" />
       </div>
 
       <div class="menu-item" @click="handleClick('Искусство')">
-        <img src="/files/menu/issk.png" alt="" />
+        <img src="@/assets/img/menu/issk.png" alt="" />
       </div>
 
       <div class="menu-item" @click="handleClick('Культура')">
-        <img src="/files/menu/cult.png" alt="" />
+        <img src="@/assets/img/menu/cult.png" alt="" />
       </div>
 
       <div class="menu-item" @click="handleClick('Менора')">
-        <img src="/files/menu/menora.png" alt="" />
+        <img src="@/assets/img/menu/menora.png" alt="" />
       </div>
     </div>
 
     <div class="menu-items-shadow">
-      <img src="/files/menu/shadow.svg" alt="" />
+      <img src="@/assets/img/menu/shadow.svg" alt="" />
     </div>
 
     <div class="menu-line">
@@ -89,6 +89,10 @@ const handleClick = (item: string) => {
         </defs>
       </svg>
     </div>
+    <div class="menu-bg">
+      <img src="@/assets/img/menu/left.svg" alt="" />
+      <img src="@/assets/img/menu/right.svg" alt="" />
+    </div>
   </div>
 </template>
 
@@ -97,6 +101,7 @@ const handleClick = (item: string) => {
   width: 100vw;
   height: 100vh;
   position: relative;
+  overflow: hidden;
 
   &::before {
     content: '';
@@ -105,7 +110,7 @@ const handleClick = (item: string) => {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/files/menu/bg-1.svg') center / cover no-repeat;
+    background: url('@/assets/img/menu/bg-1.svg') center / cover no-repeat;
   }
   &::after {
     content: '';
@@ -114,7 +119,7 @@ const handleClick = (item: string) => {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/files/menu/bg-2.svg') center / cover no-repeat;
+    background: url('@/assets/img/menu/bg-2.svg') center / cover no-repeat;
   }
 }
 .logo {
@@ -172,6 +177,19 @@ const handleClick = (item: string) => {
 
   svg {
     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+  }
+}
+
+.menu-bg {
+  img:nth-child(1) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  img:nth-child(2) {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 }
 
