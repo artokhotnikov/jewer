@@ -7,6 +7,10 @@ import EmptyBlock from '@/components/helpers/EmptyBlock.vue'
 import BackButton from '@/components/ui/BackButton.vue'
 import SmokeButton from '@/components/ui/SmokeButton.vue'
 import MediaSlider from '@/components/MediaSlider.vue'
+import HomeButton from '@/components/ui/HomeButton.vue'
+
+const PAGES_WITH_HOME_BUTTON = ['Брусит', 'Цемент', 'Железо', 'Графит']
+const PAGES_WITH_SMOKE_BUTTON = ['Термальные источники']
 
 const fs = useFsMediaStore()
 
@@ -16,6 +20,9 @@ const emptyTitle = `Галерея ${galleryName} не заполнена`
 
 const gallery = computed(() => fs.byDir.get(galleryName) || [])
 const hasGallery = computed(() => Array.isArray(gallery.value) && gallery.value.length > 0)
+
+const hasHomeButton = computed(() => PAGES_WITH_HOME_BUTTON.includes(galleryName))
+const hasSmokeButton = computed(() => PAGES_WITH_SMOKE_BUTTON.includes(galleryName))
 
 const handleSlideChange = (index: number, item: MediaFile) => {
   console.log(`Переключился на слайд ${index + 1}:`, item.name)
@@ -32,7 +39,9 @@ const handleSlideChange = (index: number, item: MediaFile) => {
 
     <back-button />
 
-    <smoke-button />
+    <smoke-button v-if="hasSmokeButton" />
+
+    <home-button v-if="hasHomeButton" />
   </div>
 </template>
 
