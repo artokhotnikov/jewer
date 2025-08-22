@@ -5,6 +5,7 @@ import { useFsMediaStore, type MediaFile } from '@/stores/fsMedia.ts'
 
 import MenuItem from '@/components/helpers/MenuItem.vue'
 import EmptyBlock from '@/components/helpers/EmptyBlock.vue'
+import BackButton from '@/components/ui/BackButton.vue'
 
 const fs = useFsMediaStore()
 const router = useRouter()
@@ -27,6 +28,8 @@ const handleClick = (item: MediaFile) => {
       <menu-item v-if="hasMenu" :menu-items="menu" @click="handleClick" />
 
       <empty-block v-else :title="emptyTitle" />
+
+      <back-button />
     </div>
   </div>
 </template>
@@ -38,7 +41,7 @@ const handleClick = (item: MediaFile) => {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  padding: 80px;
+  padding: 80px 292px 250px;
 }
 
 .menu-list {
