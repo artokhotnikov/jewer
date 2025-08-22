@@ -51,8 +51,7 @@ const handleClick = async (item: MediaFile) => {
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 980px;
-  border-radius: 72px;
+  border-radius: 36px;
   overflow: hidden;
   will-change: transform, opacity;
   cursor: pointer;
@@ -82,7 +81,7 @@ const handleClick = async (item: MediaFile) => {
 
   span {
     position: absolute;
-    font-size: 120px;
+    font-size: 60px;
     font-weight: 600;
     color: var(--color-white);
     transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);

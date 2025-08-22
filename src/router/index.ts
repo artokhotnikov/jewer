@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'menu',
       component: () => import('@/pages/SubMenuPage.vue'),
     },
+    {
+      path: '/second',
+      name: 'second',
+      component: () => import('@/pages/SecondScreenPage.vue'),
+    },
   ],
 })
 

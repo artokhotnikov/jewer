@@ -2,17 +2,31 @@
 import { onMounted } from 'vue'
 import { useTheme } from '@/composable/useTheme.ts'
 import { useFsMediaStore } from '@/stores/fsMedia.ts'
+import { useWebSocketStore } from '@/stores/websocket.ts'
 
 import ClearHandler from '@/components/FileSystem/ClearHandler.vue'
 import AccessHandler from '@/components/FileSystem/AccessHandler.vue'
+import WebSocketStatus from '@/components/WebSocketStatus.vue'
 
 const { writeCssVars } = useTheme()
 const fs = useFsMediaStore()
+const websocket = useWebSocketStore()
 
 onMounted(async () => {
   await fs.tryRestoreOnInit()
 
   writeCssVars()
+
+  if (window.WS) {
+    console.log('App: Инициализация WebSocket с URL:', window.WS)
+    websocket.initialize({
+      url: window.WS,
+      reconnectAttempts: 5,
+      reconnectInterval: 3000,
+    })
+  } else {
+    console.warn('App: window.WS не определен, WebSocket не инициализирован')
+  }
 })
 </script>
 
@@ -32,4 +46,7 @@ onMounted(async () => {
       </transition>
     </template>
   </RouterView>
+
+  <!-- Статус WebSocket соединения -->
+  <WebSocketStatus />
 </template>
