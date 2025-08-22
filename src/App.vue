@@ -47,6 +47,5 @@ onMounted(async () => {
     </template>
   </RouterView>
 
-  <!-- Статус WebSocket соединения -->
-  <WebSocketStatus />
+  <!-- <WebSocketStatus /> -->
 </template>
