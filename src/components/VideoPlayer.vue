@@ -1,11 +1,23 @@
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue'
+import { ref, onUnmounted, onMounted, watch } from 'vue'
 
 interface Props {
   src: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+watch(
+  () => props.src,
+  (newSrc, oldSrc) => {
+    if (newSrc !== oldSrc) {
+      duration.value = 0
+      currentTime.value = 0
+      stopDurationCheck()
+      startDurationCheck()
+    }
+  },
+)
 
 const videoRef = ref<HTMLVideoElement>()
 const volumeSlider = ref<HTMLElement>()
@@ -82,6 +94,46 @@ const onLoadedMetadata = () => {
   }
 }
 
+const onCanPlay = () => {
+  if (videoRef.value && duration.value === 0) {
+    duration.value = videoRef.value.duration
+  }
+}
+
+const onLoadedData = () => {
+  if (videoRef.value && duration.value === 0) {
+    duration.value = videoRef.value.duration
+  }
+}
+
+const checkDuration = () => {
+  if (videoRef.value && duration.value === 0 && videoRef.value.duration > 0) {
+    duration.value = videoRef.value.duration
+  }
+}
+
+let durationCheckInterval: number | null = null
+
+const startDurationCheck = () => {
+  if (durationCheckInterval) return
+
+  durationCheckInterval = setInterval(() => {
+    if (duration.value > 0) {
+      clearInterval(durationCheckInterval!)
+      durationCheckInterval = null
+      return
+    }
+    checkDuration()
+  }, 100)
+}
+
+const stopDurationCheck = () => {
+  if (durationCheckInterval) {
+    clearInterval(durationCheckInterval)
+    durationCheckInterval = null
+  }
+}
+
 const onPlay = () => {
   isPlaying.value = true
 }
@@ -95,7 +147,13 @@ const onEnded = () => {
   currentTime.value = 0
 }
 
+onMounted(() => {
+  startDurationCheck()
+})
+
 onUnmounted(() => {
+  stopDurationCheck()
+
   if (videoRef.value) {
     videoRef.value.pause()
   }
@@ -110,6 +168,8 @@ onUnmounted(() => {
       class="media-content"
       @timeupdate="onTimeUpdate"
       @loadedmetadata="onLoadedMetadata"
+      @canplay="onCanPlay"
+      @loadeddata="onLoadedData"
       @play="onPlay"
       @pause="onPause"
       @ended="onEnded"
